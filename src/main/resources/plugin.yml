@@ -2,3 +2,22 @@ name: ColonyMail
 main: com.github.schmidtbochum.colonymail.ColonyMailPlugin
 version: 0.0.1-SNAPSHOT
 depend: [ColonyData]
+commands:
+  mail:
+    description: Send and receive server mails.
+    permission: colony.mail.command.mail
+    usage: "/mail <read|send|clear|groupsend>"
+permissions:
+  colony.mail.command.mail:
+    description: Use the /mail command
+    default: op
+  colony.mail.command.mail.send:
+    description: Send mails
+    default: op
+    children:
+      coremail.command.mail: true
+  colony.mail.command.mail.groupsend:
+    description: Send mails to groups
+    default: op
+    children:
+      coremail.command.send: true
