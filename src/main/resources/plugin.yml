@@ -1,0 +1,4 @@
+name: ColonyMail
+main: com.github.schmidtbochum.colonymail.ColonyMailPlugin
+version: 0.0.1-SNAPSHOT
+depend: [ColonyData]

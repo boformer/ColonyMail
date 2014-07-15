@@ -1,4 +1,4 @@
 ColonyMail
 ==========
 
-Mail Plugin for Bukkit Minecraft Servers
+Mail/Messaging Plugin for Bukkit Minecraft Servers
