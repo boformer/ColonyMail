@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.github.schmidtbochum.colonydata.ColonyDataPlugin;
-import com.github.schmidtbochum.colonydata.data.CGroup;
+import com.github.schmidtbochum.colonydata.data.CPlayerGroup;
 import com.github.schmidtbochum.colonydata.data.CMail;
 import com.github.schmidtbochum.colonydata.data.CPlayer;
 import com.github.schmidtbochum.colonydata.data.DataManager;
@@ -29,14 +29,14 @@ public class ColonyMailPlugin extends JavaPlugin
 		d = ((ColonyDataPlugin) getServer().getPluginManager().getPlugin("ColonyData")).getDataManager();
 	}
 	
-	public void sendMail(CPlayer sender, CPlayer receipient, CGroup group, String message)
+	public void sendMail(CPlayer sender, CPlayer receipient, CPlayerGroup playerGroup, String message)
 	{
 		CMail mail = d.createEntityBean(CMail.class);
 		
 		mail.setDate(new Date());
 		mail.setSender(sender);
 		mail.setReceipient(receipient);
-		mail.setGroup(group);
+		mail.setPlayerGroup(playerGroup);
 		mail.setMessage(message);
 		
 		d.save(mail);
