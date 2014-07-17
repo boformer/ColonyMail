@@ -22,6 +22,10 @@
            <id>bukkit-repo</id>
            <url>http://repo.bukkit.org/content/groups/public/</url>
        </repository>
+     <repository>
+          <id>int32-repo</id>
+          <url>https://ci.int32.se/plugin/repository/everything/</url>
+    </repository>
    </repositories>
    <dependencies>
        <dependency>
@@ -36,5 +40,11 @@
        	<artifactId>ColonyData</artifactId>
        	<version>0.0.1-SNAPSHOT</version>
        </dependency>
+       <dependency>
+     <groupId>se.ranzdo.bukkit</groupId>
+     <artifactId>methodcommand</artifactId>
+     <version>0.2-SNAPSHOT</version>
+     <scope>compile</scope>
+</dependency>
    </dependencies>
 </project>
