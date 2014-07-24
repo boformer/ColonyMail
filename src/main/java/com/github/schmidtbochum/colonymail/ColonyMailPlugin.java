@@ -61,4 +61,9 @@ public class ColonyMailPlugin extends JavaPlugin
 	{
 		return m;
 	}
+	
+	public DataManager getDataManager() 
+	{
+		return d;
+	}
 }
