@@ -19,10 +19,10 @@ public class MailCommand
 	}
 
 	@Command(
-		identifier="test", //The identifier is the way the command will be accessed ingame, this command will be accessed with /test
-		description="This is a test command", //Writing the description of the command here makes it easier to generate help messages.
-		onlyPlayers = false, //If the command can be executed by a player or not.
-		permissions = {"coremail.command.mail.send"} //What permission nodes the player must have to execute this command
+		identifier="mail send",
+		description="Send and receive server mails", 
+		onlyPlayers = false,
+		permissions = {"coremail.command.mail.send"}
 	)
 	//mail send <player> <msg>
 	public void sendSelf(
