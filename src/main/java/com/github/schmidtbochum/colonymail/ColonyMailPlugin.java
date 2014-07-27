@@ -1,6 +1,5 @@
  package com.github.schmidtbochum.colonymail;
 
-import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -12,7 +11,6 @@ import com.github.schmidtbochum.colonydata.ColonyDataPlugin;
 import com.github.schmidtbochum.colonydata.command.CMailGroupArgumentHandler;
 import com.github.schmidtbochum.colonydata.command.CPlayerArgumentHandler;
 import com.github.schmidtbochum.colonydata.data.CMailGroup;
-import com.github.schmidtbochum.colonydata.data.CMail;
 import com.github.schmidtbochum.colonydata.data.CPlayer;
 import com.github.schmidtbochum.colonydata.data.DataManager;
 import com.github.schmidtbochum.colonymail.command.MailCommand;
