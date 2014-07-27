@@ -20,6 +20,8 @@ import com.github.schmidtbochum.util.PagingListCache;
 
 public class MailCommand
 {
+	//TODO
+	
 	private final DataManager d;
 	private final MessageManager m;
 
