@@ -53,19 +53,6 @@ public class ColonyMailPlugin extends JavaPlugin
 		
 	}
 	
-	public void sendMail(CPlayer sender, CPlayer receipient, CMailGroup playerGroup, String message)
-	{
-		CMail mail = d.createEntityBean(CMail.class);
-		
-		mail.setDate(new Date());
-		mail.setSender(sender);
-		mail.setReceipient(receipient);
-		mail.setMailGroup(playerGroup);
-		mail.setMessage(message);
-		
-		d.save(mail);
-	}
-	
 	public MessageManager getMessageManager()
 	{
 		return m;

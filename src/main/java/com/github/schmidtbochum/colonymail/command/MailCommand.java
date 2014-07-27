@@ -20,7 +20,6 @@ import com.github.schmidtbochum.util.PagingListCache;
 
 public class MailCommand
 {
-	private final ColonyMailPlugin plugin;
 	private final DataManager d;
 	private final MessageManager m;
 
@@ -28,7 +27,6 @@ public class MailCommand
 
 	public MailCommand(ColonyMailPlugin plugin)
 	{
-		this.plugin = plugin;
 		this.d = plugin.getDataManager();
 		this.m = plugin.getMessageManager();
 
@@ -54,7 +52,7 @@ public class MailCommand
 		}
 
 		//send mail
-		plugin.sendMail(mailSender, mailReceipient, null, mailMessage);
+		d.sendMail(mailSender, mailReceipient, null, mailMessage);
 
 		m.sendMessage("mail_sent", sender);
 	}
@@ -76,7 +74,7 @@ public class MailCommand
 		}
 
 		//send mail
-		plugin.sendMail(mailSender, null, mailGroup, mailMessage);
+		d.sendMail(mailSender, null, mailGroup, mailMessage);
 
 		m.sendMessage("mail_sent_group", sender);
 	}
