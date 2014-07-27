@@ -11,11 +11,14 @@ permissions:
   colony.command.mail.send:
     description: Send mails
     default: op
+  colony.command.mail.groupsend:
+    description: Send mails to groups
+    default: op
   colony.command.mail.read:
     description: Read mails
     default: op
-  colony.command.mail.groupsend:
-    description: Send mails to groups
+  colony.command.mail.clear:
+    description: Clear inbox
     default: op
   colony.mail.useformat:
     description: Use color/format codes in mails
