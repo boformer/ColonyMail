@@ -21,11 +21,11 @@ public class CMailPagingList extends SimplePagingList<CMail>
 	{
 		if(element.getMailGroup() == null) 
 		{
-			m.sendMessage("page_mail_template", receipient, element.getSender().getName(), element.getMessage());
+			getMessageManager().sendMessage("page_mail_template", receipient, element.getSender().getName(), element.getMessage());
 		}
 		else
 		{
-			m.sendMessage("page_mail_group_template", receipient, element.getMailGroup().getName(), element.getSender().getName(), element.getMessage());
+			getMessageManager().sendMessage("page_mail_group_template", receipient, element.getMailGroup().getName(), element.getSender().getName(), element.getMessage());
 		}
 	}
 }
