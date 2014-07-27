@@ -10,10 +10,11 @@ import se.ranzdo.bukkit.methodcommand.Command;
 import se.ranzdo.bukkit.methodcommand.Wildcard;
 
 import com.github.schmidtbochum.colonydata.data.CMail;
+import com.github.schmidtbochum.colonydata.data.CMailGroup;
 import com.github.schmidtbochum.colonydata.data.CPlayer;
 import com.github.schmidtbochum.colonydata.data.DataManager;
-import com.github.schmidtbochum.colonymail.ColonyMailPlugin;
 import com.github.schmidtbochum.colonymail.CMailPagingList;
+import com.github.schmidtbochum.colonymail.ColonyMailPlugin;
 import com.github.schmidtbochum.util.MessageManager;
 import com.github.schmidtbochum.util.PagingListCache;
 
@@ -22,7 +23,7 @@ public class MailCommand
 	private final ColonyMailPlugin plugin;
 	private final DataManager d;
 	private final MessageManager m;
-	
+
 	private final PagingListCache<CMailPagingList> mailReadCache;
 
 	public MailCommand(ColonyMailPlugin plugin)
@@ -30,68 +31,88 @@ public class MailCommand
 		this.plugin = plugin;
 		this.d = plugin.getDataManager();
 		this.m = plugin.getMessageManager();
-		
+
 		mailReadCache = new PagingListCache<>();
-		
+
 		plugin.getServer().getPluginManager().registerEvents(mailReadCache, plugin);
 	}
 
-	@Command(
-		identifier="mail send",
-		description="Send server mails", 
-		onlyPlayers = false,
-		permissions = {"colony.command.mail.send"}
-	)
+	@Command(identifier = "mail send", description = "Send server mails", onlyPlayers = false, permissions = {"colony.command.mail.send"})
 	//mail send <player> <msg>
-	public void sendMail(
-	    CommandSender sender,
-	    @Arg(name="player") CPlayer mailReceipient,
-	    @Wildcard @Arg(name="msg") String mailMessage
-	) 
+	public void sendMail(CommandSender sender, @Arg(name = "player") CPlayer mailReceipient, @Wildcard @Arg(name = "msg") String mailMessage)
 	{
-	    CPlayer mailSender = d.getPlayer(sender);
-		
-	    if(!sender.hasPermission("colony.mail.useformat")) 
-	    {
-	    	mailMessage = ChatColor.stripColor(mailMessage);
-	    }
-	    else 
-	    {
-	    	mailMessage = ChatColor.translateAlternateColorCodes(ColonyMailPlugin.COLOR_CHAR, mailMessage);
-	    }
-		
+		CPlayer mailSender = d.getPlayer(sender);
+
+		//translate or remove format codes
+		if(sender.hasPermission("colony.mail.useformat"))
+		{
+			mailMessage = ChatColor.translateAlternateColorCodes(ColonyMailPlugin.COLOR_CHAR, mailMessage);
+		}
+		else
+		{
+			mailMessage = ChatColor.stripColor(mailMessage);
+		}
+
+		//send mail
 		plugin.sendMail(mailSender, mailReceipient, null, mailMessage);
-		
+
 		m.sendMessage("mail_sent", sender);
-		
-		//TODO debug
-		sender.sendMessage(mailSender.getName() + "to " + mailReceipient.getName() + ": " + mailMessage);
 	}
 	
-	@Command(
-			identifier="mail read",
-			description="Read server mails", 
-			onlyPlayers = false,
-			permissions = {"colony.command.mail.read"}
-	)
-	//mail read [page]
-	public void readMail(
-	    CommandSender sender,
-	    @Arg(name="page", def = "1") int page
-	) 
+	@Command(identifier = "mail groupsend", description = "Send server mails to a group", onlyPlayers = false, permissions = {"colony.command.mail.groupsend"})
+	//mail groupsend <group> <msg>
+	public void sendGroupMail(CommandSender sender, @Arg(name = "group") CMailGroup mailGroup, @Wildcard @Arg(name = "msg") String mailMessage)
 	{
-	    CMailPagingList pagingList = mailReadCache.getPagingList(sender);
-		
-		if(pagingList == null) 
+		CPlayer mailSender = d.getPlayer(sender);
+
+		//translate or remove format codes
+		if(sender.hasPermission("colony.mail.useformat"))
+		{
+			mailMessage = ChatColor.translateAlternateColorCodes(ColonyMailPlugin.COLOR_CHAR, mailMessage);
+		}
+		else
+		{
+			mailMessage = ChatColor.stripColor(mailMessage);
+		}
+
+		//send mail
+		plugin.sendMail(mailSender, null, mailGroup, mailMessage);
+
+		m.sendMessage("mail_sent_group", sender);
+	}
+
+	@Command(identifier="mail read", description="Read server mails", onlyPlayers = false, permissions = {"colony.command.mail.read"})
+	//mail read [page]
+	public void readMail(CommandSender sender, @Arg(name = "page", def = "1") int page)
+	{
+		//get cached paging list
+		CMailPagingList pagingList = mailReadCache.getPagingList(sender);
+
+		if(pagingList == null)
 		{
 			CPlayer mailReceipient = d.getPlayer(sender);
-			List<CMail> mails = d.getMails(mailReceipient);	
-			
-			pagingList = new CMailPagingList(mails, m, 2, "mail read");
+			List<CMail> mails = d.getMails(mailReceipient);
+
+			//cache paging list
+			pagingList = new CMailPagingList(mails, m, 1, "mail read");
 			mailReadCache.put(sender, pagingList);
 		}
 
 		pagingList.sendPage(sender, page);
 	}
+	
+	@Command(identifier = "mail clear", description = "Clear your inbox", onlyPlayers = false, permissions = {"colony.command.mail.clear"})
+	//mail clear
+	public void clearMail(CommandSender sender)
+	{
+		CPlayer player = d.getPlayer(sender);
+		
+		//clear mails
+		d.clearMail(player);
+		
+		m.sendMessage("inbox_cleared", sender);
+	}
+	
+
 
 }
