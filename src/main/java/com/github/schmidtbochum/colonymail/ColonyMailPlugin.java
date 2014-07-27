@@ -22,6 +22,8 @@ public class ColonyMailPlugin extends JavaPlugin
 	private DataManager d;
 	private MessageManager m;
 	private CommandHandler commandHandler;
+	
+	public static final char COLOR_CHAR = '&';
 
 	
 	public void onEnable() 
