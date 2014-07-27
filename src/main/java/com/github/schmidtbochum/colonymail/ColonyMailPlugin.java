@@ -16,6 +16,7 @@ import com.github.schmidtbochum.colonydata.data.CMail;
 import com.github.schmidtbochum.colonydata.data.CPlayer;
 import com.github.schmidtbochum.colonydata.data.DataManager;
 import com.github.schmidtbochum.colonymail.command.MailCommand;
+import com.github.schmidtbochum.colonymail.listener.EventListener;
 import com.github.schmidtbochum.util.MessageManager;
 
 public class ColonyMailPlugin extends JavaPlugin
@@ -40,6 +41,8 @@ public class ColonyMailPlugin extends JavaPlugin
 		ColonyDataPlugin dataPlugin = (ColonyDataPlugin) getServer().getPluginManager().getPlugin("ColonyData");
 		
 		d = dataPlugin.getDataManager();
+		
+		getServer().getPluginManager().registerEvents(new EventListener(this), this);
 		
 		commandHandler = new CommandHandler(this);
 		
