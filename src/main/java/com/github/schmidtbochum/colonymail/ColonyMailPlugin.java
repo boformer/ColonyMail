@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import se.ranzdo.bukkit.methodcommand.CommandHandler;
 
 import com.github.schmidtbochum.colonydata.ColonyDataPlugin;
+import com.github.schmidtbochum.colonydata.command.CMailGroupArgumentHandler;
 import com.github.schmidtbochum.colonydata.command.CPlayerArgumentHandler;
 import com.github.schmidtbochum.colonydata.data.CMailGroup;
 import com.github.schmidtbochum.colonydata.data.CMail;
@@ -25,6 +26,8 @@ public class ColonyMailPlugin extends JavaPlugin
 	
 	public static final char COLOR_CHAR = '&';
 
+	//TODO mail list formatting
+	
 	
 	public void onEnable() 
 	{
@@ -41,6 +44,7 @@ public class ColonyMailPlugin extends JavaPlugin
 		commandHandler = new CommandHandler(this);
 		
 		commandHandler.registerArgumentHandler(CPlayer.class, new CPlayerArgumentHandler(dataPlugin));
+		commandHandler.registerArgumentHandler(CMailGroup.class, new CMailGroupArgumentHandler(dataPlugin));
 		
 		commandHandler.registerCommands(new MailCommand(this));
 		
