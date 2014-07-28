@@ -1,5 +1,6 @@
 package com.github.schmidtbochum.colonymail.command;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.ChatColor;
@@ -13,6 +14,7 @@ import com.github.schmidtbochum.colonydata.data.CMail;
 import com.github.schmidtbochum.colonydata.data.CMailGroup;
 import com.github.schmidtbochum.colonydata.data.CPlayer;
 import com.github.schmidtbochum.colonydata.data.DataManager;
+import com.github.schmidtbochum.colonymail.CMailGroupPagingList;
 import com.github.schmidtbochum.colonymail.CMailPagingList;
 import com.github.schmidtbochum.colonymail.ColonyMailPlugin;
 import com.github.schmidtbochum.util.MessageManager;
@@ -114,6 +116,42 @@ public class MailCommand
 		m.sendMessage("inbox_cleared", sender);
 	}
 	
-
-
+	@Command(identifier = "mail group add", description = "Add a mail group", onlyPlayers = false, permissions = {"colony.command.mail.group.add"})
+	//mail group add <name>
+	public void addGroup(CommandSender sender, @Arg(name = "name") String groupName)
+	{
+		CMailGroup mailGroup = d.getMailGroup(groupName);
+		
+		if(mailGroup != null) 
+		{
+			m.sendMessage("mail_group_already_exists", sender, mailGroup.getName());
+			return;
+		}
+		
+		mailGroup = d.createEntityBean(CMailGroup.class);
+		mailGroup.setName(groupName);
+		mailGroup.setMailExpirationDays(30);
+		
+		d.save(mailGroup);
+		
+		m.sendMessage("mail_group_added", sender, mailGroup.getName());
+	}
+	
+	@Command(identifier = "mail group remove", description = "Remove a mail group", onlyPlayers = false, permissions = {"colony.command.mail.group.remove"})
+	//mail group remove <name>
+	public void removeGroup(CommandSender sender, @Arg(name = "name") CMailGroup mailGroup)
+	{
+		d.delete(mailGroup);
+		
+		m.sendMessage("mail_group_removed", sender, mailGroup.getName());
+	}
+	
+	@Command(identifier = "mail group list", description = "List of mail groups", onlyPlayers = false, permissions = {"colony.command.mail.group.list"})
+	//mail group list [page]
+	public void listGroups(CommandSender sender, @Arg(name = "page", def = "1") int page)
+	{
+		CMailGroupPagingList pagingList = new CMailGroupPagingList(new ArrayList<CMailGroup>(d.getMailGroups()), m, 0, "mail group list");
+		
+		pagingList.sendPage(sender, page);
+	}
 }
