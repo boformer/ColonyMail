@@ -1,6 +1,7 @@
 package com.github.schmidtbochum.colonymail;
 
 import java.util.List;
+
 import org.bukkit.command.CommandSender;
 
 import com.github.schmidtbochum.colonydata.data.CMail;
@@ -9,8 +10,6 @@ import com.github.schmidtbochum.util.SimplePagingList;
 
 public class CMailPagingList extends SimplePagingList<CMail>
 {
-	
-	
 	public CMailPagingList(List<CMail> elementList, MessageManager m, int expirationMinutes, String pagingCommand)
 	{
 		super(elementList, m, expirationMinutes, pagingCommand, "page_mail_header", "page_mail_no_elements");
