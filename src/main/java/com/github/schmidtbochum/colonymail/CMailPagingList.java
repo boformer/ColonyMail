@@ -18,13 +18,13 @@ public class CMailPagingList extends SimplePagingList<CMail>
 	@Override
 	public void sendElement(CommandSender receipient, CMail element)
 	{
-		if(element.getMailGroup() == null) 
+		if(element.getPlayerGroup() == null) 
 		{
 			getMessageManager().sendMessage("page_mail_template", receipient, element.getSender().getName(), element.getMessage());
 		}
 		else
 		{
-			getMessageManager().sendMessage("page_mail_group_template", receipient, element.getMailGroup().getName(), element.getSender().getName(), element.getMessage());
+			getMessageManager().sendMessage("page_mail_group_template", receipient, element.getPlayerGroup().getName(), element.getSender().getName(), element.getMessage());
 		}
 	}
 }

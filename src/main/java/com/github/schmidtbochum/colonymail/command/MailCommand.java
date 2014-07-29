@@ -11,10 +11,10 @@ import se.ranzdo.bukkit.methodcommand.Command;
 import se.ranzdo.bukkit.methodcommand.Wildcard;
 
 import com.github.schmidtbochum.colonydata.data.CMail;
-import com.github.schmidtbochum.colonydata.data.CMailGroup;
+import com.github.schmidtbochum.colonydata.data.CPlayerGroup;
 import com.github.schmidtbochum.colonydata.data.CPlayer;
 import com.github.schmidtbochum.colonydata.data.DataManager;
-import com.github.schmidtbochum.colonymail.CMailGroupPagingList;
+import com.github.schmidtbochum.colonymail.CPlayerGroupPagingList;
 import com.github.schmidtbochum.colonymail.CMailPagingList;
 import com.github.schmidtbochum.colonymail.ColonyMailPlugin;
 import com.github.schmidtbochum.util.MessageManager;
@@ -64,7 +64,7 @@ public class MailCommand
 	
 	@Command(identifier = "mail groupsend", description = "Send server mails to a group", onlyPlayers = false, permissions = {"colony.command.mail.groupsend"})
 	//mail groupsend <group> <msg>
-	public void sendGroupMail(CommandSender sender, @Arg(name = "group") CMailGroup mailGroup, @Wildcard @Arg(name = "msg") String mailMessage)
+	public void sendGroupMail(CommandSender sender, @Arg(name = "group") CPlayerGroup playerGroup, @Wildcard @Arg(name = "msg") String mailMessage)
 	{
 		CPlayer mailSender = d.getPlayer(sender);
 
@@ -79,7 +79,7 @@ public class MailCommand
 		}
 
 		//send mail
-		d.sendMail(mailSender, null, mailGroup, mailMessage);
+		d.sendMail(mailSender, null, playerGroup, mailMessage);
 
 		m.sendMessage("mail_sent_group", sender);
 	}
@@ -120,37 +120,37 @@ public class MailCommand
 	//mail group add <name>
 	public void addGroup(CommandSender sender, @Arg(name = "name") String groupName)
 	{
-		CMailGroup mailGroup = d.getMailGroup(groupName);
+		CPlayerGroup playerGroup = d.getPlayerGroup(groupName);
 		
-		if(mailGroup != null) 
+		if(playerGroup != null) 
 		{
-			m.sendMessage("mail_group_already_exists", sender, mailGroup.getName());
+			m.sendMessage("playergroup_already_exists", sender, playerGroup.getName());
 			return;
 		}
 		
-		mailGroup = d.createEntityBean(CMailGroup.class);
-		mailGroup.setName(groupName);
-		mailGroup.setMailExpirationDays(30);
+		playerGroup = d.createEntityBean(CPlayerGroup.class);
+		playerGroup.setName(groupName);
+		playerGroup.setMailExpirationDays(30);
 		
-		d.save(mailGroup);
+		d.save(playerGroup);
 		
-		m.sendMessage("mail_group_added", sender, mailGroup.getName());
+		m.sendMessage("playergroup_added", sender, playerGroup.getName());
 	}
 	
 	@Command(identifier = "mail group remove", description = "Remove a mail group", onlyPlayers = false, permissions = {"colony.command.mail.group.remove"})
 	//mail group remove <name>
-	public void removeGroup(CommandSender sender, @Arg(name = "name") CMailGroup mailGroup)
+	public void removeGroup(CommandSender sender, @Arg(name = "name") CPlayerGroup playerGroup)
 	{
-		d.delete(mailGroup);
+		d.delete(playerGroup);
 		
-		m.sendMessage("mail_group_removed", sender, mailGroup.getName());
+		m.sendMessage("playergroup_removed", sender, playerGroup.getName());
 	}
 	
 	@Command(identifier = "mail group list", description = "List of mail groups", onlyPlayers = false, permissions = {"colony.command.mail.group.list"})
 	//mail group list [page]
 	public void listGroups(CommandSender sender, @Arg(name = "page", def = "1") int page)
 	{
-		CMailGroupPagingList pagingList = new CMailGroupPagingList(new ArrayList<CMailGroup>(d.getMailGroups()), m, 0, "mail group list");
+		CPlayerGroupPagingList pagingList = new CPlayerGroupPagingList(new ArrayList<CPlayerGroup>(d.getPlayerGroups()), m, 0, "mail group list");
 		
 		pagingList.sendPage(sender, page);
 	}

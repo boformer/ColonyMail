@@ -8,9 +8,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 import se.ranzdo.bukkit.methodcommand.CommandHandler;
 
 import com.github.schmidtbochum.colonydata.ColonyDataPlugin;
-import com.github.schmidtbochum.colonydata.command.CMailGroupArgumentHandler;
+import com.github.schmidtbochum.colonydata.command.CPlayerGroupArgumentHandler;
 import com.github.schmidtbochum.colonydata.command.CPlayerArgumentHandler;
-import com.github.schmidtbochum.colonydata.data.CMailGroup;
+import com.github.schmidtbochum.colonydata.data.CPlayerGroup;
 import com.github.schmidtbochum.colonydata.data.CPlayer;
 import com.github.schmidtbochum.colonydata.data.DataManager;
 import com.github.schmidtbochum.colonymail.command.MailCommand;
@@ -45,7 +45,7 @@ public class ColonyMailPlugin extends JavaPlugin
 		commandHandler = new CommandHandler(this);
 		
 		commandHandler.registerArgumentHandler(CPlayer.class, new CPlayerArgumentHandler(dataPlugin));
-		commandHandler.registerArgumentHandler(CMailGroup.class, new CMailGroupArgumentHandler(dataPlugin));
+		commandHandler.registerArgumentHandler(CPlayerGroup.class, new CPlayerGroupArgumentHandler(dataPlugin));
 		
 		commandHandler.registerCommands(new MailCommand(this));
 		
