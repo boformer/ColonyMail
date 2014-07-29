@@ -1,6 +1,5 @@
 package com.github.schmidtbochum.colonymail.command;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.ChatColor;
@@ -14,7 +13,6 @@ import com.github.schmidtbochum.colonydata.data.CMail;
 import com.github.schmidtbochum.colonydata.data.CPlayerGroup;
 import com.github.schmidtbochum.colonydata.data.CPlayer;
 import com.github.schmidtbochum.colonydata.data.DataManager;
-import com.github.schmidtbochum.colonydata.paging.CPlayerGroupPagingList;
 import com.github.schmidtbochum.colonymail.ColonyMailPlugin;
 import com.github.schmidtbochum.colonymail.paging.CMailPagingList;
 import com.github.schmidtbochum.util.MessageManager;
@@ -114,44 +112,5 @@ public class MailCommand
 		d.clearMail(player);
 		
 		m.sendMessage("inbox_cleared", sender);
-	}
-	
-	@Command(identifier = "mail group add", description = "Add a mail group", onlyPlayers = false, permissions = {"colony.command.mail.group.add"})
-	//mail group add <name>
-	public void addGroup(CommandSender sender, @Arg(name = "name") String groupName)
-	{
-		CPlayerGroup playerGroup = d.getPlayerGroup(groupName);
-		
-		if(playerGroup != null) 
-		{
-			m.sendMessage("playergroup_already_exists", sender, playerGroup.getName());
-			return;
-		}
-		
-		playerGroup = d.createEntityBean(CPlayerGroup.class);
-		playerGroup.setName(groupName);
-		playerGroup.setMailExpirationDays(30);
-		
-		d.save(playerGroup);
-		
-		m.sendMessage("playergroup_added", sender, playerGroup.getName());
-	}
-	
-	@Command(identifier = "mail group remove", description = "Remove a mail group", onlyPlayers = false, permissions = {"colony.command.mail.group.remove"})
-	//mail group remove <name>
-	public void removeGroup(CommandSender sender, @Arg(name = "name") CPlayerGroup playerGroup)
-	{
-		d.delete(playerGroup);
-		
-		m.sendMessage("playergroup_removed", sender, playerGroup.getName());
-	}
-	
-	@Command(identifier = "mail group list", description = "List of mail groups", onlyPlayers = false, permissions = {"colony.command.mail.group.list"})
-	//mail group list [page]
-	public void listGroups(CommandSender sender, @Arg(name = "page", def = "1") int page)
-	{
-		CPlayerGroupPagingList pagingList = new CPlayerGroupPagingList(new ArrayList<CPlayerGroup>(d.getPlayerGroups()), m, 0, "mail group list");
-		
-		pagingList.sendPage(sender, page);
 	}
 }
