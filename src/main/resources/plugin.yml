@@ -5,21 +5,32 @@ depend: [ColonyData]
 commands:
   mail:
     description: Send and receive server mails.
-    permission: colony.mail.command.mail
+    permission: colony.command.mail
     usage: "/mail <read|send|clear|groupsend>"
 permissions:
+  colony.command.mail:
+    description: Use /mail command
+    default: op
   colony.command.mail.send:
     description: Send mails
     default: op
+    children:
+      colony.command.mail: true
   colony.command.mail.groupsend:
     description: Send mails to groups
     default: op
+    children:
+      colony.command.mail: true
   colony.command.mail.read:
     description: Read mails
     default: op
+    children:
+      colony.command.mail: true
   colony.command.mail.clear:
     description: Clear inbox
     default: op
+    children:
+      colony.command.mail: true
   colony.mail.useformat:
     description: Use color/format codes in mails
     default: op
