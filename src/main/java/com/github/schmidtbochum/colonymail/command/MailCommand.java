@@ -14,9 +14,9 @@ import com.github.schmidtbochum.colonydata.data.CMail;
 import com.github.schmidtbochum.colonydata.data.CPlayerGroup;
 import com.github.schmidtbochum.colonydata.data.CPlayer;
 import com.github.schmidtbochum.colonydata.data.DataManager;
-import com.github.schmidtbochum.colonymail.CPlayerGroupPagingList;
-import com.github.schmidtbochum.colonymail.CMailPagingList;
+import com.github.schmidtbochum.colonydata.paging.CPlayerGroupPagingList;
 import com.github.schmidtbochum.colonymail.ColonyMailPlugin;
+import com.github.schmidtbochum.colonymail.paging.CMailPagingList;
 import com.github.schmidtbochum.util.MessageManager;
 import com.github.schmidtbochum.util.PagingListCache;
 

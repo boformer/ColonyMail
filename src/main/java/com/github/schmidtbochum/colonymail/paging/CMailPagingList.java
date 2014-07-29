@@ -1,4 +1,4 @@
-package com.github.schmidtbochum.colonymail;
+package com.github.schmidtbochum.colonymail.paging;
 
 import java.util.List;
 
